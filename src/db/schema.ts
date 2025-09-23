@@ -53,8 +53,8 @@ export const verification = pgTable("verification", {
 export const agents = pgTable("agents", {
 	id: text('id').primaryKey().$default(() => nanoid()),
 	name: text('name').notNull(),
-	user_id: text('user_id').notNull().references(() => user.id, { onDelete: 'cascade' }),
+	userId: text('user_id').notNull().references(() => user.id, { onDelete: 'cascade' }),
 	instructions: text('instructions').notNull(),
-	created_at: timestamp('created_at').$defaultFn(() => /* @__PURE__ */ new Date()).notNull(),
-	updated_at: timestamp('updated_at').$defaultFn(() => /* @__PURE__ */ new Date()).notNull()
+	createdAt: timestamp('created_at').$defaultFn(() => /* @__PURE__ */ new Date()).notNull(),
+	updatedAt: timestamp('updated_at').$defaultFn(() => /* @__PURE__ */ new Date()).notNull()
 });

@@ -3,6 +3,7 @@ import { Roboto } from "next/font/google";
 import { TRPCReactProvider } from "@/trpc/client";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
+import { NuqsAdapter } from "nuqs/adapters/next";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -19,13 +20,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <TRPCReactProvider>
-      <html lang="en">
-        <body className={`${roboto.className} antialiased`}>
-          <Toaster />
-          {children}
+    <NuqsAdapter>
+      <TRPCReactProvider>
+        <html lang="en">
+          <body className={`${roboto.className} antialiased`}>
+            <Toaster />
+            {children}
           </body>
-      </html>
-    </TRPCReactProvider>
+        </html>
+      </TRPCReactProvider>
+    </NuqsAdapter>
   );
 }
