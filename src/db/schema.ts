@@ -1,4 +1,4 @@
-import { pgTable, text, timestamp, boolean } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, boolean, pgEnum } from "drizzle-orm/pg-core";
 import { nanoid } from "nanoid";
 
 // Tables required by better-auth
@@ -55,6 +55,29 @@ export const agents = pgTable("agents", {
 	name: text('name').notNull(),
 	userId: text('user_id').notNull().references(() => user.id, { onDelete: 'cascade' }),
 	instructions: text('instructions').notNull(),
+	createdAt: timestamp('created_at').$defaultFn(() => /* @__PURE__ */ new Date()).notNull(),
+	updatedAt: timestamp('updated_at').$defaultFn(() => /* @__PURE__ */ new Date()).notNull()
+});
+
+export const meetingStatus = pgEnum('meeting_status',[
+	'upcoming',
+	'active',
+	'completed',
+	'processing',
+	'canceled',
+]);
+
+export const meetings = pgTable("meetings", {
+	id: text('id').primaryKey().$default(() => nanoid()),
+	name: text('name').notNull(),
+	userId: text('user_id').notNull().references(() => user.id, { onDelete: 'cascade' }),
+	agentId: text('agent_id').notNull().references(() => agents.id, { onDelete: 'cascade' }),
+	status: meetingStatus('status').notNull().default('upcoming'),
+	startedAt: timestamp('started_at'),
+	endedAt: timestamp('ended_at'),
+	recordingUrl: text('recording_url'),
+	transcriptUrl: text('transcript_url'),
+	summary: text('summary'),
 	createdAt: timestamp('created_at').$defaultFn(() => /* @__PURE__ */ new Date()).notNull(),
 	updatedAt: timestamp('updated_at').$defaultFn(() => /* @__PURE__ */ new Date()).notNull()
 });

@@ -1,6 +1,6 @@
 import { loadSearchParams } from "@/agents/params";
 import { ListHeader } from "@/agents/ui/list-header";
-import { AgentsView } from "@/agents/views/agents-view";
+import { AgentsView } from "@/agents/ui/agents-view";
 import { LoadingState } from "@/components/loading-state";
 import { auth } from "@/lib/auth";
 import { getQueryClient, trpc } from "@/trpc/server";
