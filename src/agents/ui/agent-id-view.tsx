@@ -50,7 +50,7 @@ export const AgentIdView = ({ agentId }: Props) => {
   const handleRemoveAgent = async () => {
     const confirmed = await confirmRemove();
     if (confirmed) {
-      await removeAgent.mutate({ id: agentId });
+      await removeAgent.mutateAsync({ id: agentId });
     }
   };
 
