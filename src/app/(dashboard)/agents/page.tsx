@@ -1,5 +1,5 @@
 import { loadSearchParams } from "@/agents/params";
-import { ListHeader } from "@/agents/ui/list-header";
+import { AgentsListHeader } from "@/agents/ui/agents-list-header";
 import { AgentsView } from "@/agents/ui/agents-view";
 import { LoadingState } from "@/components/loading-state";
 import { auth } from "@/lib/auth";
@@ -31,7 +31,7 @@ export default async function Page({ searchParams }: Props) {
 
   return (
     <>
-      <ListHeader />
+      <AgentsListHeader />
       <HydrationBoundary state={dehydrate(queryClient)}>
         <Suspense
           fallback={
