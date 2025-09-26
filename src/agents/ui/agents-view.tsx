@@ -1,7 +1,7 @@
 "use client";
 
 import { EmptyState } from "@/components/empty-state";
-import { columns } from "@/components/ui/columns";
+import { columns } from "@/agents/ui/columns";
 import { DataTable } from "@/components/ui/data-table";
 import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
