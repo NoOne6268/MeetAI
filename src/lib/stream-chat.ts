@@ -1,7 +1,8 @@
 import "server-only";
-import { StreamClient } from "@stream-io/node-sdk";
 
-export const streamVideo = new StreamClient(
+import { StreamChat } from "stream-chat";
+
+export const streamChat = StreamChat.getInstance(
     process.env.NEXT_PUBLIC_STREAM_API_KEY!,
     process.env.STREAM_API_SECRET!
 );
