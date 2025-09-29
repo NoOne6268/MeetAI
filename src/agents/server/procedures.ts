@@ -1,7 +1,7 @@
 import { db } from "@/db";
-import { agents } from "@/db/schema";
+import { agents, meetings } from "@/db/schema";
 import { and, count, desc, eq, getTableColumns, ilike, sql } from "drizzle-orm";
-import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
+import { createTRPCRouter, premiumProcedure, protectedProcedure } from "@/trpc/init";
 import { agentsInsertSchema, agentsUpdateSchema } from "../schemas";
 import { z } from "zod";
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE, MAX_PAGE_SIZE, MIN_PAGE_SIZE } from "@/constants";
@@ -51,13 +51,14 @@ export const agentsRouter = createTRPCRouter({
         const [existingAgent] = await db
             .select({
                 ...getTableColumns(agents),
-                meetingCount: sql<number>`5`,
+                meetingCount: count(meetings.id),
             })
             .from(agents)
+            .leftJoin(meetings, eq(meetings.agentId, agents.id))
             .where(and(
                 eq(agents.id, input.id),
                 eq(agents.userId, ctx.auth.user.id)
-            ));
+            )).groupBy(agents.id);
 
         if (!existingAgent) {
             throw new TRPCError({
@@ -81,21 +82,25 @@ export const agentsRouter = createTRPCRouter({
             const data = await db
                 .select({
                     ...getTableColumns(agents),
-                    meetingCount: sql<number>`5`,
+                    meetingCount: count(meetings.id),
                 })
                 .from(agents)
+                .leftJoin(meetings, eq(meetings.agentId, agents.id))
                 .where(
                     and(
                         eq(agents.userId, ctx.auth.user.id),
                         search ? ilike(agents.name, `%${search}%`) : undefined,
                     )
-                ).orderBy(desc(agents.createdAt), desc(agents.id))
+                )
+                .groupBy(agents.id)
+                .orderBy(desc(agents.createdAt), desc(agents.id))
                 .limit(pageSize)
                 .offset((page - 1) * pageSize);
 
             const [total] = await db
                 .select({ count: count() })
                 .from(agents)
+                .leftJoin(meetings, eq(meetings.agentId, agents.id))
                 .where(
                     and(
                         eq(agents.userId, ctx.auth.user.id),
@@ -112,7 +117,7 @@ export const agentsRouter = createTRPCRouter({
             };
         }),
 
-    create: protectedProcedure.input(agentsInsertSchema)
+    create: premiumProcedure("agent").input(agentsInsertSchema)
         .mutation(async ({ input, ctx }) => {
             const [createAgent] = await db.insert(agents).values({
                 name: input.name,
