@@ -1,6 +1,6 @@
 import { db } from "@/db";
 import { agents, meetings } from "@/db/schema";
-import { and, count, desc, eq, getTableColumns, ilike, sql } from "drizzle-orm";
+import { and, count, desc, eq, getTableColumns, ilike } from "drizzle-orm";
 import { createTRPCRouter, premiumProcedure, protectedProcedure } from "@/trpc/init";
 import { agentsInsertSchema, agentsUpdateSchema } from "../schemas";
 import { z } from "zod";
@@ -51,14 +51,13 @@ export const agentsRouter = createTRPCRouter({
         const [existingAgent] = await db
             .select({
                 ...getTableColumns(agents),
-                meetingCount: count(meetings.id),
+                meetingCount: db.$count(meetings, eq(meetings.agentId, agents.id)),
             })
             .from(agents)
-            .leftJoin(meetings, eq(meetings.agentId, agents.id))
             .where(and(
                 eq(agents.id, input.id),
                 eq(agents.userId, ctx.auth.user.id)
-            )).groupBy(agents.id);
+            ));
 
         if (!existingAgent) {
             throw new TRPCError({
@@ -82,17 +81,15 @@ export const agentsRouter = createTRPCRouter({
             const data = await db
                 .select({
                     ...getTableColumns(agents),
-                    meetingCount: count(meetings.id),
+                    meetingCount: db.$count(meetings, eq(meetings.agentId, agents.id)),
                 })
                 .from(agents)
-                .leftJoin(meetings, eq(meetings.agentId, agents.id))
                 .where(
                     and(
                         eq(agents.userId, ctx.auth.user.id),
                         search ? ilike(agents.name, `%${search}%`) : undefined,
                     )
                 )
-                .groupBy(agents.id)
                 .orderBy(desc(agents.createdAt), desc(agents.id))
                 .limit(pageSize)
                 .offset((page - 1) * pageSize);
@@ -100,7 +97,6 @@ export const agentsRouter = createTRPCRouter({
             const [total] = await db
                 .select({ count: count() })
                 .from(agents)
-                .leftJoin(meetings, eq(meetings.agentId, agents.id))
                 .where(
                     and(
                         eq(agents.userId, ctx.auth.user.id),

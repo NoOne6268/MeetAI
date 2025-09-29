@@ -1,4 +1,3 @@
-import { HomeView } from "@/components/home/views/home-view";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
@@ -12,5 +11,5 @@ export default async function Home() {
     redirect("/login");
   }
   
-  return <HomeView />;
+  redirect("/meetings");
 }

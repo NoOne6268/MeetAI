@@ -1,7 +1,6 @@
 import { DEFAULT_PAGE } from "@/constants";
 import { parseAsInteger, parseAsString, useQueryStates, parseAsStringEnum } from "nuqs";
 import { MeetingStatus } from "@/meetings/types";
-import { parse } from "path";
 
 export const useMeetingsFilters = () => {
     return useQueryStates({

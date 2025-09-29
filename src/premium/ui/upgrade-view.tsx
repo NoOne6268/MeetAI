@@ -2,7 +2,6 @@
 
 import { authClient } from "@/lib/auth-client";
 import { useTRPC } from "@/trpc/client";
-import { productsGetRequestFromJSON } from "@polar-sh/sdk/models/operations/productsget.js";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { PricingCard } from "./pricing-card";
 

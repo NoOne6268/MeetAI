@@ -17,7 +17,6 @@ import "stream-chat-react/dist/css/v2/index.css";
 
 interface Props {
   meetingId: string;
-  meetingName: string;
   userId: string;
   userName: string;
   userImage: string;
@@ -25,7 +24,6 @@ interface Props {
 
 export const ChatUI = ({
   meetingId,
-  meetingName,
   userId,
   userName,
   userImage,
