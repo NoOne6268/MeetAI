@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MeetAI
+
+MeetAI is a SaaS AI platform that allows users to create **custom agents with personalized context** and then host **live meetings** with them. After the meeting, users can continue the conversation using AI chat.
+
+Powered by **OpenAI**, **Stream Video**, and **Stream Chat**, MeetAI provides a seamless meeting and post-meeting experience with AI-driven agents.
+
+It includes **paid subscription plans** via [polar.sh](https://polar.sh), **authentication and payment integration** with [better-auth](https://better-auth), and a modern, scalable backend powered by **drizzle-orm** with **Neon Database**.
+
+---
+
+## Features
+
+* **Custom AI Agents** – Create agents with unique context tailored to your needs.
+* **AI-Powered Meetings** – Join video calls with your AI agent using **Stream Video**.
+* **Post-Meeting Chat** – Continue conversations with your agent after meetings using **Stream Chat** and OpenAI (GPT-4o).
+* **Subscriptions & Payments** – Paid plans integrated via **polar.sh**.
+* **Authentication & Billing** – Secure auth and payment workflows with **better-auth**.
+* **Modern UI** – Built with **shadcn/ui** for a clean, accessible design.
+* **Scalable Backend** – Database powered by **drizzle-orm** with **Neon** for serverless, production-ready PostgreSQL.
+
+---
 
 ## Getting Started
 
-First, run the development server:
+First, install the dependencies
+
+```bash
+npm i --legacy-peer-deps
+```
+
+Then, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser to see MeetAI running locally.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Tech Stack
+
+* **Framework:** [Next.js](https://nextjs.org) (App Router)
+* **UI:** [shadcn/ui](https://ui.shadcn.com) + [TailwindCSS](https://tailwindcss.com)
+* **AI & Meetings:** [OpenAI](https://openai.com), [Stream Video](https://getstream.io/video), [Stream Chat](https://getstream.io/chat)
+* **Auth & Payments:** [better-auth](https://better-auth) + [polar.sh](https://polar.sh)
+* **Database & ORM:** [Neon](https://neon.tech) + [drizzle-orm](https://orm.drizzle.team)
+* **State & Data:** [TanStack Query](https://tanstack.com/query) (server/client data hydration)
+
+---
 
 ## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+* [Next.js Documentation](https://nextjs.org/docs) – explore Next.js features.
+* [Stream Documentation](https://getstream.io/docs) – learn about video and chat APIs.
+* [polar.sh Documentation](https://docs.polar.sh) – manage subscriptions & payments.
+* [drizzle-orm Docs](https://orm.drizzle.team) – query builder & migrations.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🚢 Deployment
 
-## Deploy on Vercel
+The easiest way to deploy MeetAI is on the [Vercel Platform](https://vercel.com), creators of Next.js.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+For database, use [Neon](https://neon.tech) for a scalable PostgreSQL setup.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Check out the [Next.js deployment guide](https://nextjs.org/docs/app/building-your-application/deploying) for more info.
